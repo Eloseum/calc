@@ -1,0 +1,76 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+USE WORK.GaimBoiLibrary.ALL;
+
+entity Processor is
+    Port 
+	 ( 
+		ADDRESS	: BUFFER STD_LOGIC_VECTOR(15 downto 0);
+		DATA		: INOUT STD_LOGIC_VECTOR(7 downto 0);
+		CLOCK		: IN STD_LOGIC; 	-- ACTIVE LOW
+		INT		: IN STD_LOGIC; 	-- ACTIVE LOW
+		NMI		: IN STD_LOGIC; 	-- ACTIVE LOW
+		HALT		: OUT STD_LOGIC; 	-- ACTIVE LOW
+		MREQ		: OUT STD_LOGIC; 	-- ACTIVE LOW
+		IORQ		: OUT STD_LOGIC; 	-- ACTIVE LOW 
+		RD			: BUFFER STD_LOGIC;	-- ACTIVE LOW
+		WR			: BUFFER STD_LOGIC; 	-- ACTIVE LOW
+		BUSAK		: OUT STD_LOGIC; 	-- ACTIVE LOW
+		WAET		: IN STD_LOGIC; 	-- ACTIVE LOW
+		BUSRQ		: IN STD_LOGIC; 	-- ACTIVE LOW
+		RESET		: IN STD_LOGIC; 	-- ACTIVE LOW
+		MI			: BUFFER STD_LOGIC; 	-- ACTIVE LOW
+		RFSH		: OUT STD_LOGIC 	-- ACTIVE LOW
+	 );
+end Processor;
+
+architecture Structural of Processor is
+	
+	------------ Type Declarations ------------
+	type RA is array (7 downto 0) of STD_LOGIC_VECTOR(15 downto 0);
+	------------ Signal Declarations ------------
+	signal DEBUG_REGISTERS 	: RA; -- := (x"0100", x"0000", x"0504", x"0706", x"0908", X"0B0A", x"0000", x"0F0E");
+	signal RAM_CLK 	: STD_LOGIC := '1';
+	signal RAM_WR  	: STD_LOGIC := '1';
+	signal RAM_DATA	: STD_LOGIC_VECTOR(7 downto 0);
+	signal RAM_Q		: STD_LOGIC_VECTOR(7 downto 0);
+	------------ Start of Design ------------
+begin
+
+	------------ Component Instantiations ------------
+
+	Processor: process(CLOCK)
+	variable counter 		: INTEGER := 0;
+	variable DATA_IN		: STD_LOGIC_VECTOR(7 downto 0);
+	variable PREFIX_CB 	: STD_LOGIC := '1';
+	variable FLAGS			: STD_LOGIC_VECTOR(16 downto 0);
+	variable AF				: STD_LOGIC_VECTOR(15 downto 0);
+	variable BC				: STD_LOGIC_VECTOR(15 downto 0);
+	variable DE				: STD_LOGIC_VECTOR(15 downto 0);
+	variable HL				: STD_LOGIC_VECTOR(15 downto 0);
+	variable SP				: STD_LOGIC_VECTOR(15 downto 0);
+	variable PC				: STD_LOGIC_VECTOR(15 downto 0);
+	variable REGISTERS 	: RA := (x"0100", x"0000", x"0000", x"0100", x"0908", X"0B0A", x"0CAE", x"1F0E");
+	variable REG_INDEX	: INTEGER := 0;
+	variable REG_POINT	: INTEGER := 0;
+	variable PC_SAV		: STD_LOGIC_VECTOR(15 downto 0);
+	variable IDK			: STD_LOGIC_VECTOR(13 downto 0);
+	variable POP			: STD_LOGIC := '0';
+	variable PUSH			: STD_LOGIC := '0';
+	variable CALL			: STD_LOGIC := '0';
+	variable TEMP			: STD_LOGIC_VECTOR(15 downto 0);
+	variable LD_OP			: INTEGER := 0;
+	variable WB_8			: STD_LOGIC := '0';
+	variable IO_8			: STD_LOGIC_VECTOR(7 downto 0);
+	variable DI				: STD_LOGIC := '0';
+	variable LD_HL			: STD_LOGIC := '0';
+	variable SKIP			: STD_LOGIC := '0';
+	variable INTERRUPT	: STD_LOGIC := '0';
+	begin
+		if falling_edge(CLOCK) then
+			
+			end if;
+	end process;
+	
+end Structural; 

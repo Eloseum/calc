@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+ENTITY myadder_tb is
+END myadder_tb;
+ARCHITECTURE simulate OF IMC IS
+----------------------------------------------------
+--- The parent design, myadder8_top, is instantiated
+--- in this testbench. Note the component
+--- declaration and the instantiation.
+----------------------------------------------------
+COMPONENT IMC
+PORT (
+		 AP :  IN std_logic_vector(7 downto 0);
+		 BP : IN std_logic_vector(7 downto 0);
+		 CLKP: IN std_logic ;
+		 C_INP: IN std_logic;
+		 QP: OUT std_logic_VECTOR (8 downto 0)
+	 );
+END COMPONENT;
+SIGNAL a_data_input : std_logic_vector(7 DOWNTO 0);
+SIGNAL b_data_input  : std_logic_vector(7 DOWNTO 0);
+SIGNAL clock            : std_logic;
+SIGNAL carry_in : std_logic;
+SIGNAL sum : std_logic_vector (8 DOWNTO 0);
+BEGIN
+uut: myadder8_top 
+PORT MAP ( 
+    AP => a_data_input,
+    BP => b_data_input,
+    CLKP => clock,
+    C_INP=> carry_in,
+    QP => Q);
+stimulus: PROCESS 
+  BEGIN
+-----------------------------------------------------
+---Provide stimulus in this section. (not shown here) 
+-----------------------------------------------------
+   wait;
+   end process; -- stimulus
+END simulate;

@@ -1,0 +1,21 @@
+transcript on
+if ![file isdirectory GaimBoi_iputf_libs] {
+	file mkdir GaimBoi_iputf_libs
+}
+
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+###### Libraries for IPUTF cores 
+###### End libraries for IPUTF cores 
+###### MIF file copy and HDL compilation commands for IPUTF cores 
+
+
+vcom "C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK_sim/CLOCK.vho"
+
+vcom -93 -work work {C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/GaimBoiLibrary.vhd}
+vcom -93 -work work {C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CPU.vhd}
+

@@ -1,0 +1,54 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+entity IMC is
+    Port 
+	 ( 
+		------------ Clock ------------
+		CLOCK		: IN STD_LOGIC; -- 4 clocks within a 8.4mhz cycle
+		------------ RAM ------------
+		RAM_ADDR	: OUT STD_LOGIC_VECTOR (14 DOWNTO 0);
+		RAM_CLK	: OUT STD_LOGIC  := '1';
+		RAM_Q		: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		--RAM_DATA	: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+		--RAM_WREN	: OUT STD_LOGIC ;
+		------------ Stage Interface ------------
+		Instruction_IN	: OUT STD_LOGIC_VECTOR(7 downto 0);
+		CLOCK_OUT		:	OUT STD_LOGIC
+	 );
+
+end IFU;
+	
+architecture Behavioral of IFU is 
+
+------------ Signal Declarations ------------
+	signal PC : UNSIGNED(15 downto 0);
+	
+------------ Start of Design ------------
+	
+	FETCH: process(CLOCK)
+	variable counter : UNSIGNED(1 downto 0);
+	begin
+		if rising_edge(CLOCK) then
+			if (counter = 0) then
+				RAM_ADDR <= PC(14 downto 0); -- address to read from
+				RAM_CLK <= '0'; -- falling edge of clock
+				counter := 1;
+			elsif (counter = 1) then
+				RAM_CLK <= '1'; -- should trigger update
+				counter := 2;
+				CLOCK_OUT <= '0'; -- falling edge of pipeline clock
+			elsif (counter = 2) then
+				Instruction_IN <= RAM_Q; -- get data from RAM
+				PC <= (PC+2); -- next cycle will read the following byte
+				counter := 3;
+			else
+				PC <= (PC+2); -- next cycle will read the following byte
+				counter := 0; -- reset fetch cycle
+				CLOCK_OUT <= '1'; -- clock the next pipeline stage
+			end if;
+		end if;
+	end process;
+	
+end Behavioral;

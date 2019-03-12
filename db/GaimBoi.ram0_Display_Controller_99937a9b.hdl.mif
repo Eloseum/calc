@@ -1,0 +1,22 @@
+-- begin_signature
+-- Display_Controller
+-- end_signature
+WIDTH=7;
+DEPTH=16;
+
+ADDRESS_RADIX=UNS;
+DATA_RADIX=BIN;
+
+CONTENT BEGIN
+	10 :	1111111;
+	9 :	0111000;
+	8 :	0000000;
+	7 :	1111000;
+	6 :	0000010;
+	5 :	0110010;
+	4 :	0011001;
+	3 :	0110000;
+	2 :	0100100;
+	1 :	1111001;
+	0 :	1000000;
+END;

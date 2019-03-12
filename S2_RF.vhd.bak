@@ -1,0 +1,92 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+entity S2_RF is
+    Port 
+	 ( 
+		CLOCK		: IN STD_LOGIC; -- 3 clocks within a 8.4mhz cycle
+		CONTROL	: IN INTEGER range 0 to 63;
+		TARGETA	: IN UNSIGNED(2 downto 0);
+		TARGETB	: IN UNSIGNED(2 downto 0)
+	 );
+end S2_RF;
+
+architecture Behavioral of S2_RF is 
+
+------------ Type Declarations ------------
+type RA is array (3 downto 0) of UNSIGNED;
+------------ Signal Declarations ------------
+--signal regA 	: UNSIGNED(7 downto 0);
+--signal regB 	: UNSIGNED(7 downto 0);
+--signal regC 	: UNSIGNED(7 downto 0);
+--signal regD 	: UNSIGNED(7 downto 0);
+--signal regE 	: UNSIGNED(7 downto 0);
+--signal regH 	: UNSIGNED(7 downto 0);
+--signal regL 	: UNSIGNED(7 downto 0);
+signal REGISTERS  : RA := (x"0", x"0", x"0", x"0", x"0", X"0", x"0", x"1");
+signal regSP 		: UNSIGNED(15 downto 0); -- stack pointer
+signal regST 		: UNSIGNED(7 downto 0); -- status
+------------ Start of Design ------------
+begin
+
+	ALU: process(CLOCK)
+	begin
+		if rising_edge(CLOCK) then
+			case CONTROL is
+				when 0 => -- NOP
+					-- do nothing
+				when 1 => -- INCREMENT
+					
+				when 2 => -- DECREMENT
+					
+				when 3 => -- ADD
+					
+				when 4 => -- ADD WITH CARRY
+					
+				when 5 => -- SUBTRACT
+					
+				when 6 => -- SUBTRACT WITH CARRY
+					
+				when 7 => -- AND
+					
+				when 8 => -- OR
+					
+				when 9 => -- XOR
+					
+				when 10 => -- COMPARE
+					
+				when 11 => -- ROTATE LEFT
+					
+				when 12 => -- ROTATE RIGHT
+					
+				when 13 => -- ROTATE LEFT ACCUMULATOR
+					
+				when 14 => -- ROTATE RIGHT ACCUMULATOR
+					
+				when 15 => -- ROTATE LEFT THROUGH CARRY
+				
+				when 16 => -- ROTATE RIGHT CIRCULAR REGISTER
+				
+				when 17 => -- ROTATE RIGHT CIRCULAR ACCUMULATOR
+				
+				when 18 => -- ROTATE LEFT DIGIT
+				
+				when 19 => -- ROTATE RIGHT DIGIT
+				
+				when 20 => -- SET BIT
+
+				when 21 => -- SHIFT LEFT ARITHMITIC
+				
+				when 22 => -- SHIFT RIGHT ARITHMITIC
+				
+				when 23 => -- SHIFT RIGHT LOGICAL
+				
+				when others =>
+					
+			end case;
+		end if;
+	end process;
+
+
+end Behavioral; 

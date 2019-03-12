@@ -1,0 +1,31 @@
+
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Resources/Tools/SystemBuilder/CodeGenerated/DE1_SOC/GaimBoi/CLOCK.vhd
+
+Dec 14 01AM:42:04>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Resources/Tools/SystemBuilder/CodeGenerated/DE1_SOC/GaimBoi/CLOCK.vhd
+
+Dec 14 01AM:45:36>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TestClock.vhd
+
+Feb 21 06PM:15:28>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TestClock.vhd
+
+Feb 21 06PM:16:14>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TestClock.vhd
+
+Feb 22 09PM:55:44>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK.vhd
+
+Mar 05 10PM:01:50>: Megafunction PLL Intel FPGA IP v18.0 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted

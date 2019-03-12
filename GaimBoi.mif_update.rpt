@@ -1,0 +1,71 @@
+MIF/HEX Update report for GaimBoi
+Mon Mar 11 07:05:09 2019
+Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. MIF/HEX Update Summary
+  3. MIF/HEX Update Processed Files
+  4. MIF/HEX Update Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+
+
+
++---------------------------------------------------------------+
+; MIF/HEX Update Summary                                        ;
++-----------------------+---------------------------------------+
+; MIF/HEX Update Status ; Successful - Mon Mar 11 07:05:09 2019 ;
+; Revision Name         ; GaimBoi                               ;
+; Top-level Entity Name ; TOP                                   ;
+; Family                ; Cyclone V                             ;
+; Device                ; 5CSEMA5F31C6                          ;
++-----------------------+---------------------------------------+
+
+
++----------------------------------------------------------------+
+; MIF/HEX Update Processed Files                                 ;
++----------------------------------------------------------------+
+; File Name                                                      ;
++----------------------------------------------------------------+
+; C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.mif ;
++----------------------------------------------------------------+
+
+
++-------------------------+
+; MIF/HEX Update Messages ;
++-------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime MIF/HEX Update
+    Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+    Info: Processing started: Mon Mar 11 07:04:55 2019
+Info: Command: quartus_cdb GaimBoi -c GaimBoi --update_mif
+Info (39024): Processed the following Memory Initialization File(s)
+    Info (39025): Processed Memory Initialization File C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.mif File: C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.mif Line: 0
+Info: Quartus Prime MIF/HEX Update was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 4922 megabytes
+    Info: Processing ended: Mon Mar 11 07:05:09 2019
+    Info: Elapsed time: 00:00:14
+    Info: Total CPU time (on all processors): 00:00:13
+
+

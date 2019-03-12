@@ -1,0 +1,195 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+entity TOP is
+    Port 
+	 ( 
+		CLOCK_50		: IN STD_LOGIC;
+		CLOCK2_50	: IN STD_LOGIC;
+		CLOCK3_50	: IN STD_LOGIC;
+		CLOCK4_50	: IN STD_LOGIC;
+		SW				: IN STD_LOGIC_VECTOR(9 downto 0);
+		KEY			: IN STD_LOGIC_VECTOR(3 downto 0);
+		HEX0			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		HEX1			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		HEX2			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		HEX3			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		HEX4			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		HEX5			: OUT STD_LOGIC_VECTOR(6 downto 0);
+		LEDR			: OUT STD_LOGIC_VECTOR(9 downto 0);
+		GPIO_0		: INOUT STD_LOGIC_VECTOR(35 downto 0);
+		GPIO_1		: IN STD_LOGIC_VECTOR(35 downto 0)
+	 );
+end TOP;
+
+architecture Structural of TOP is
+
+	COMPONENT PROCESSOR IS
+		PORT
+		(
+			ADDRESS	: BUFFER STD_LOGIC_VECTOR(15 downto 0);
+			DATA		: INOUT STD_LOGIC_VECTOR(7 downto 0);
+			CLOCK		: IN STD_LOGIC;
+			INT		: IN STD_LOGIC;
+			NMI		: IN STD_LOGIC;
+			HALT		: OUT STD_LOGIC;
+			MREQ		: OUT STD_LOGIC;
+			IORQ		: OUT STD_LOGIC;
+			RD			: BUFFER STD_LOGIC;
+			WR			: BUFFER STD_LOGIC;
+			BUSAK		: OUT STD_LOGIC;
+			WAET		: IN STD_LOGIC;
+			BUSRQ		: IN STD_LOGIC;
+			RESET		: IN STD_LOGIC;
+			MI			: BUFFER STD_LOGIC;
+			RFSH		: OUT STD_LOGIC
+		);
+	END COMPONENT PROCESSOR;
+	
+	COMPONENT RAM IS
+		PORT
+		(
+			address	: IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+			clock		: IN STD_LOGIC  := '1';
+			data		: IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			wren		: IN STD_LOGIC;
+			q			: OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+		);
+	END COMPONENT RAM;
+	
+	COMPONENT IMC IS
+		PORT
+		(
+			WR			: IN STD_LOGIC;
+			RD 		: IN STD_LOGIC;
+			MREQ 		: IN STD_LOGIC;
+			Q			: IN STD_LOGIC_VECTOR(7 downto 0);
+			DATA		: OUT STD_LOGIC_VECTOR(7 downto 0);
+			IO_8		: INOUT STD_LOGIC_VECTOR(7 downto 0)
+	 );
+	END COMPONENT IMC;
+	
+	COMPONENT CLOCK IS
+		PORT
+		(
+			refclk   : in  std_logic := '0'; --  refclk.clk
+			rst      : in  std_logic := '0'; --   reset.reset
+			outclk_1 : out std_logic         -- outclk1.clk
+	 );
+	END COMPONENT CLOCK;
+	
+	COMPONENT 	HX8357_Controller is
+    Port 
+	 ( 
+		CLOCK			: IN STD_LOGIC;
+		RESET			: IN STD_LOGIC;
+		MCU_IORQ		: IN STD_LOGIC;
+		MCU_WR		: IN STD_LOGIC;
+		MCU_RD		: IN STD_LOGIC;
+		MCU_DAT		: IN STD_LOGIC_VECTOR(7 downto 0);
+		MCU_ADD		: IN STD_LOGIC_VECTOR(7 downto 0);
+		MCU_INT		: OUT STD_LOGIC;
+		MCU_BUSRQ	: OUT STD_LOGIC;
+		LCD_RST		: OUT STD_LOGIC;
+		LCD_CS		: OUT STD_LOGIC;
+		LCD_DCX		: OUT STD_LOGIC;
+		LCD_WR		: BUFFER STD_LOGIC;
+		LCD_RD		: BUFFER STD_LOGIC;
+		LCD_DAT		: INOUT STD_LOGIC_VECTOR(7 downto 0);
+		LEDR			: OUT STD_LOGIC_VECTOR(9 downto 0);
+		SW				: IN STD_LOGIC_VECTOR(8 downto 0)
+	 );
+	END COMPONENT HX8357_Controller;
+	
+	SIGNAL WIRE_ADDRESS		: STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL WIRE_Q		 		: STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL WIRE_DATA			: STD_LOGIC_VECTOR(7 downto 0);
+	SIGNAL WIRE_IO				: STD_LOGIC_VECTOR(7 downto 0);	
+	SIGNAL WIRE_MI		 		: STD_LOGIC;
+	SIGNAL WIRE_WR		 		: STD_LOGIC;
+	SIGNAL WIRE_RD		 		: STD_LOGIC;
+	SIGNAL WIRE_WREN			: STD_LOGIC;
+	SIGNAL WIRE_NMI			: STD_LOGIC;
+	SIGNAL WIRE_IORQ			: STD_LOGIC;
+	SIGNAL WIRE_MREQ			: STD_LOGIC;
+	SIGNAL WIRE_BUSAK			: STD_LOGIC;
+	SIGNAL WIRE_LCD_INT		: STD_LOGIC;
+	SIGNAL WIRE_BUSRQ			: STD_LOGIC;
+	SIGNAL WIRE_CLOCK			: STD_LOGIC;
+	
+begin
+	
+	IC_0: PROCESSOR
+	PORT MAP
+	(
+		ADDRESS	=> WIRE_ADDRESS,
+		DATA		=> WIRE_IO,
+		CLOCK		=> WIRE_CLOCK,
+		INT		=> '1',
+		NMI		=> WIRE_NMI, -- connected to keyboard controller
+		HALT		=> GPIO_0(13),
+		MREQ		=> WIRE_MREQ,
+		IORQ		=> WIRE_IORQ,
+		RD			=> WIRE_RD,
+		WR			=> WIRE_WR,
+		BUSAK		=> WIRE_BUSAK,
+		WAET		=> GPIO_0(14),
+		BUSRQ		=> WIRE_BUSRQ,
+		RESET		=> SW(9),
+		MI			=> WIRE_MI,
+		RFSH		=> GPIO_0(15)
+	);
+		
+	IC_1: RAM
+	PORT MAP
+	(
+		address	=> WIRE_ADDRESS,
+		clock		=> WIRE_MI,
+		data		=> WIRE_DATA,
+		wren		=> WIRE_WR,
+		q			=> WIRE_Q
+	);
+		
+	IC_2: IMC
+	PORT MAP
+	(
+		WR			=> WIRE_WR,
+		RD 		=> WIRE_RD,
+		MREQ		=> WIRE_MREQ,
+		Q			=> WIRE_Q,
+		DATA		=> WIRE_DATA,
+		IO_8		=> WIRE_IO
+	);
+	
+	IC_3: HX8357_Controller
+	PORT MAP
+	(
+		CLOCK			=> WIRE_CLOCK,
+		RESET			=> SW(9),
+		MCU_IORQ		=> WIRE_IORQ,
+		MCU_WR		=> WIRE_WR,
+		MCU_RD		=> WIRE_RD,
+		MCU_DAT		=> WIRE_IO,
+		MCU_ADD		=> WIRE_ADDRESS(7 downto 0),
+		MCU_INT		=> WIRE_LCD_INT,
+		MCU_BUSRQ	=> WIRE_BUSRQ,
+		LCD_RST		=> GPIO_0(0),
+		LCD_CS		=> GPIO_0(1),
+		LCD_DCX		=> GPIO_0(2),
+		LCD_WR		=> GPIO_0(3),
+		LCD_RD		=> GPIO_0(4),
+		LCD_DAT		=> GPIO_0(12 downto 5),
+		LEDR			=> LEDR,
+		SW				=> SW(8 downto 0)
+	);
+	
+	IC_4: CLOCK
+	PORT MAP
+	(
+		refclk   => CLOCK_50,
+		rst      => '0',
+		outclk_1 => WIRE_CLOCK
+	);
+		
+END Structural; 

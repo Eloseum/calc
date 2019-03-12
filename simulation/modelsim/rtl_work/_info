@@ -1,0 +1,302 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/simulation/modelsim
+Pgaimboilibrary
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z4 w1549799091
+R0
+Z5 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/GaimBoiLibrary.vhd
+Z6 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/GaimBoiLibrary.vhd
+l0
+L5
+VL;zPU278=ZUH@FQE8<fP]2
+!s100 2?TKG=_<A^12XdYH5]n[<2
+Z7 OV;C;10.5b;63
+31
+b1
+Z8 !s110 1552225409
+!i10b 1
+Z9 !s108 1552225409.000000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/GaimBoiLibrary.vhd|
+Z11 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/GaimBoiLibrary.vhd|
+!i113 1
+Z12 o-93 -work work
+Z13 tExplicit 1 CvgOpt 0
+Bbody
+Z14 DPx4 work 14 gaimboilibrary 0 22 L;zPU278=ZUH@FQE8<fP]2
+R1
+R2
+R3
+l0
+L40
+V<T^dZM@ka9oPL78=DciC]0
+!s100 XRe^BE`:iNH6F209:5k:m1
+R7
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Ehx8357_controller
+Z15 w1552225298
+R14
+R1
+R2
+R3
+R0
+Z16 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/HX8357_Controller.vhd
+Z17 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/HX8357_Controller.vhd
+l0
+L6
+V2KT2k]Fog[UV><mZDPRE`2
+!s100 2]N?aa83QNdeGl@WgJ^2G1
+R7
+31
+R8
+!i10b 1
+R9
+Z18 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/HX8357_Controller.vhd|
+Z19 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/HX8357_Controller.vhd|
+!i113 1
+R12
+R13
+Astructural
+R14
+R1
+R2
+R3
+DEx4 work 17 hx8357_controller 0 22 2KT2k]Fog[UV><mZDPRE`2
+l38
+L29
+VYCX>?_W`nm82HLO@o@W7^1
+!s100 YUU]c00;]maQSUF6gI`KB1
+R7
+31
+R8
+!i10b 1
+R9
+R18
+R19
+!i113 1
+R12
+R13
+Eimc
+Z20 w1551876882
+R1
+R2
+R3
+R0
+Z21 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/IMC.vhd
+Z22 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/IMC.vhd
+l0
+L5
+Vkc@76@78Lfo8`5NKf3S]70
+!s100 oN_l`ZT4VQA;KnF[[NQlk1
+R7
+31
+Z23 !s110 1552225410
+!i10b 1
+R9
+Z24 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/IMC.vhd|
+Z25 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/IMC.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R1
+R2
+R3
+DEx4 work 3 imc 0 22 kc@76@78Lfo8`5NKf3S]70
+l22
+L17
+V@Vl2iR2oC31j<dmJaG;hI1
+!s100 XgXId9d_5m0f9IFa<;bmW1
+R7
+31
+R23
+!i10b 1
+R9
+R24
+R25
+!i113 1
+R12
+R13
+Eprocessor
+Z26 w1552222275
+R14
+R1
+R2
+R3
+R0
+Z27 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/Processor.vhd
+Z28 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/Processor.vhd
+l0
+L6
+V3a<NDeQDdd95F<dmRF>Kj2
+!s100 J9I0BFgOU1J0K;cISQ_4h3
+R7
+31
+R23
+!i10b 1
+Z29 !s108 1552225410.000000
+Z30 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/Processor.vhd|
+Z31 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/Processor.vhd|
+!i113 1
+R12
+R13
+Astructural
+R14
+R1
+R2
+R3
+DEx4 work 9 processor 0 22 3a<NDeQDdd95F<dmRF>Kj2
+l39
+L28
+ViU53F86]CUkEbHM6eba?f0
+!s100 5a;Xjh:L66LbDKV6IY^Jf0
+R7
+31
+R23
+!i10b 1
+R29
+R30
+R31
+!i113 1
+R12
+R13
+Eram
+Z32 w1549975839
+Z33 DPx9 altera_mf 20 altera_mf_components 0 22 7RjT1Xb9^`L[coRHZN<9k2
+R2
+R3
+R0
+Z34 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.vhd
+Z35 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.vhd
+l0
+L42
+V`<IR3P<CR0_8;;=bX3]3g3
+!s100 oB>7^f;BUKHNP=eZ<Ehf60
+R7
+31
+R23
+!i10b 1
+R29
+Z36 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.vhd|
+Z37 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/RAM.vhd|
+!i113 1
+R12
+R13
+Asyn
+R33
+R2
+R3
+DEx4 work 3 ram 0 22 `<IR3P<CR0_8;;=bX3]3g3
+l58
+L54
+VaHI5Z;1_^U3BQGUNDJ]XQ2
+!s100 0fY]Z747GoUSDm^W9JLSi0
+R7
+31
+R23
+!i10b 1
+R29
+R36
+R37
+!i113 1
+R12
+R13
+Etb_top
+Z38 w1551345669
+R1
+R2
+R3
+R0
+Z39 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TB_TOP.vhd
+Z40 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TB_TOP.vhd
+l0
+L6
+VQA^14>YBChzmCk1T_4lYf0
+!s100 ojn;F0COEi;k@l2Jm3D7Y0
+R7
+32
+R23
+!i10b 1
+R29
+Z41 !s90 -reportprogress|300|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TB_TOP.vhd|
+Z42 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TB_TOP.vhd|
+!i113 1
+Z43 o-work work
+R13
+Asimulate
+R1
+R2
+R3
+DEx4 work 6 tb_top 0 22 QA^14>YBChzmCk1T_4lYf0
+l62
+L9
+V64C42;Rjk=CWM0CbGUoIQ3
+!s100 oFgJ2ecf5Qzfg[BooUB2z1
+R7
+32
+R23
+!i10b 1
+R29
+R41
+R42
+!i113 1
+R43
+R13
+Etop
+Z44 w1551864505
+R1
+R2
+R3
+R0
+Z45 8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TOP.vhd
+Z46 FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TOP.vhd
+l0
+L5
+VEAaDH`Q>>Z^4d8Damm8D[2
+!s100 [B^:j[3UF4V>AAb:[8zja1
+R7
+31
+R23
+!i10b 1
+R29
+Z47 !s90 -reportprogress|300|-93|-work|work|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TOP.vhd|
+Z48 !s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/TOP.vhd|
+!i113 1
+R12
+R13
+Astructural
+R1
+R2
+R3
+Z49 DEx4 work 3 top 0 22 EAaDH`Q>>Z^4d8Damm8D[2
+l122
+L26
+Z50 V^VH7a8]51UBf9WMOSl9Xb0
+Z51 !s100 HA7SgO7XJbno1mlD0fMoP0
+R7
+31
+R23
+!i10b 1
+R29
+R47
+R48
+!i113 1
+R12
+R13

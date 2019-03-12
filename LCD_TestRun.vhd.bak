@@ -1,0 +1,135 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+USE WORK.GaimBoiLibrary.ALL;
+
+entity 	LCD_Interface is
+    Port 
+	 ( 
+		CLOCK			: IN STD_LOGIC;
+		RESET			: IN STD_LOGIC;
+		MCU_IORQ		: IN STD_LOGIC;
+		MCU_WR		: IN STD_LOGIC;
+		MCU_RD		: IN STD_LOGIC;
+		MCU_DAT		: IN STD_LOGIC_VECTOR(7 downto 0);
+		MCU_ADD		: IN STD_LOGIC_VECTOR(7 downto 0);
+		MCU_INT		: OUT STD_LOGIC;
+		MCU_BUSRQ	: OUT STD_LOGIC;
+		LCD_RST		: OUT STD_LOGIC;
+		LCD_CS		: OUT STD_LOGIC;
+		LCD_DCX		: OUT STD_LOGIC;
+		LCD_WR		: OUT STD_LOGIC;
+		LCD_RD		: BUFFER STD_LOGIC;
+		LCD_DAT		: INOUT STD_LOGIC_VECTOR(7 downto 0)
+	 );
+end LCD_Interface;
+
+architecture Structural of LCD_Interface is
+
+type RA is array (2 downto 0) of STD_LOGIC_VECTOR(15 downto 0);
+signal PORT_ID		: STD_LOGIC_VECTOR(7 downto 0) := x"CD";
+signal TESTS		: STD_LOGIC_VECTOR(7 downto 0) := x"00";
+
+begin
+
+	------------ Component Instantiations ------------
+
+	process(CLOCK)
+	variable COUNTER 	: INTEGER := 0;
+	variable R_COUNT	: INTEGER := 0;
+	variable DATA		: STD_LOGIC_VECTOR(7 downto 0);
+	variable RGB		: RA;
+	variable TEST 		: STD_LOGIC := '1';
+	begin
+		if (rising_edge(CLOCK)) then
+			if (RESET = '0') then
+				COUNTER 	:= 0;
+				R_COUNT 	:= 0;
+				LCD_DCX 	<= '1';
+				LCD_RST 	<= '1';
+				LCD_CS 	<= '1';
+				LCD_DCX 	<= '1';
+				LCD_WR 	<= '1';
+				LCD_RD 	<= '1';
+				LCD_DAT 	<= (others => 'Z');
+			else
+				if ((COUNTER = 0) and (MCU_IORQ = '1')) or ((TEST = '1') and (COUNTER = 0)) then
+					if (MCU_ADD(7 downto 0) = PORT_ID) or (TEST = '1') then
+						COUNTER := 1;
+						TESTS(0) <= '1';
+					end if;
+				elsif ((COUNTER = 1) and (MCU_IORQ = '1') and (MCU_WR = '1')) or ((TEST = '1') and (COUNTER = 1)) then
+					--DATA := MCU_DAT;
+					DATA := x"09";
+					TESTS(1) <= '1';
+					if (DATA = x"01") then -- SOFTWARE RESET
+						
+					elsif (DATA = x"09") then -- READ DISPLAY STATUS
+						LCD_DCX <= '0'; -- falling edge of DCX
+						LCD_RD <= '1'; -- hold RD high
+						LCD_WR <= '0'; -- falling edge of write
+						LCD_CS <= '0'; -- falling edge of write
+						LCD_DAT <= X"09"; -- command code
+						R_COUNT := 10; -- write command byte and read 5 data bytes
+						TESTS(2) <= '1';
+					elsif (DATA = x"0A") then -- READ DISPLAY POWER MODE
+						
+					elsif (DATA = x"0B") then -- READ DISPLAY MADCTL
+						
+					elsif (DATA = x"0C") then -- READ DISPLAY PIXEL FORMAT
+						
+					elsif (DATA = x"0D") then -- READ DISPLAY IMAGE MODE
+						
+					elsif (DATA = x"0E") then -- READ DISPLAY SIGNAL MODE
+						
+					elsif (DATA = x"11") then -- SLEEP OUT?
+						
+					elsif (DATA = x"13") then -- NORMAL DISPLAY MODE ON
+						
+					elsif (DATA = x"2A") then -- COLUMN ADDRESS SET
+						
+					elsif (DATA = x"2B") then -- PAGE ADDRESS SET
+						
+					elsif (DATA = x"2C") then -- MEMORY WRITE
+						
+					elsif (DATA = x"2E") then -- MEMORY READ
+						
+					elsif (DATA = x"36") then -- MEMORY ACCESS CONTROL
+						
+					elsif (DATA = x"3A") then -- INETRFACE PIXEL FORMAT
+						
+					elsif (DATA = x"3C") then -- MEMORY WRITE CONTINUE
+						
+					elsif (DATA = x"51") then -- WRITE DISPLAY BRIGHTNESS VALUE
+						
+					elsif (DATA = x"B0") then -- INTERFACE MODE CONTROL
+						
+					elsif (DATA = x"B6") then -- DISPLAY FUNCTION CONTROL
+						
+					elsif (DATA = x"0C") then
+						
+					end if;
+					COUNTER := 2;
+				elsif (COUNTER = 2) then -- clock instruction
+					LCD_WR <= '1'; -- latch instruction
+					COUNTER := 3;
+				elsif (COUNTER = 3) then -- reset D/CX
+					LCD_DCX <= '1';
+					COUNTER := 4;
+				elsif (COUNTER = 4) then
+					if (R_COUNT > 0) then -- read data in from ILI9488
+						LCD_DAT <= (others => 'Z');
+						LCD_RD <= NOT(LCD_RD); -- clock data in
+						R_COUNT := (R_COUNT-1);
+					elsif (MCU_IORQ = '0') then -- continue
+						LCD_DCX <= '1';
+						LCD_CS <= '1'; -- disable chip
+						COUNTER := 0;
+						TEST := '0';
+					end if;
+				end if;
+			end if;
+		end if;
+	end process;
+	
+end Structural; 

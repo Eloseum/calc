@@ -1,0 +1,243 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+PACKAGE GaimBoiLibrary IS
+
+	COMPONENT CLOCK is
+		port 
+		(
+			refclk   : IN  std_logic := '0'; --  refclk.clk
+			rst      : IN  std_logic := '0'; --   reset.reset
+			outclk_0 : OUT std_logic        -- outclk0.clk
+		);
+	END COMPONENT;
+
+	COMPONENT RAM is
+		port 
+
+		(
+			address	: IN STD_LOGIC_VECTOR (14 DOWNTO 0);
+			clock		: IN STD_LOGIC  := '1';
+			data		: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+			wren		: IN STD_LOGIC;
+			q			: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+		);
+	END COMPONENT;
+	
+	function parity(X 	: STD_LOGIC_VECTOR(15 downto 0)) return STD_LOGIC;
+	function ADD_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0)) 	return STD_LOGIC_VECTOR;
+	function ADC_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0); C : STD_LOGIC) return STD_LOGIC_VECTOR;
+	function ADD_16(X, Y : STD_LOGIC_VECTOR(15 downto 0)) return STD_LOGIC_VECTOR;
+	function SUB_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0)) 	return STD_LOGIC_VECTOR;
+	function SBC_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0); C : STD_LOGIC) return STD_LOGIC_VECTOR;
+	function AND_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0)) 	return STD_LOGIC_VECTOR;
+	function XOR_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0)) 	return STD_LOGIC_VECTOR;
+	function OR_8(X, Y 	: STD_LOGIC_VECTOR(7 downto 0)) 	return STD_LOGIC_VECTOR;
+	
+end package GaimBoiLibrary;
+	
+package body GaimBoiLibrary is
+
+	function parity(X : STD_LOGIC_VECTOR(15 downto 0))
+		return STD_LOGIC is
+	variable TEST : STD_LOGIC := '1';
+	begin
+		for i in 0 to 15 loop
+			TEST := (TEST xor X(i));
+		end loop;
+		return TEST;
+	end parity;
+	
+	function ADD_8(X, Y : STD_LOGIC_VECTOR(7 downto 0))
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+		--if (UNSIGNED(UNSIGNED(X(3 downto 0)) + UNSIGNED(Y(3 downto 0))) > x"F") then
+			--TEMP(11) := '1';
+		--else
+			--TEMP(11) := '0';
+		--end if;
+		TEMP(8 downto 0) := STD_LOGIC_VECTOR(RESIZE((UNSIGNED(X)+UNSIGNED(Y)), 9));
+		if (TEMP(7 downto 0) = x"00") then
+			TEMP(12) := '1';
+		else
+			TEMP(12) := '0';
+		end if;
+		TEMP(9) := '0'; -- add instructions clear the N flag
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		return STD_LOGIC_VECTOR(TEMP);
+	end ADD_8;
+	
+	function ADC_8(X, Y : STD_LOGIC_VECTOR(7 downto 0); C : STD_LOGIC)
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+--		if (UNSIGNED(UNSIGNED(X(3 downto 0)) + UNSIGNED(Y(3 downto 0))) > x"F") then
+--			TEMP(11) := '1';
+--		else
+--			TEMP(11) := '0';
+--		end if;
+		if (C = '1') then
+			TEMP(8 downto 0) := STD_LOGIC_VECTOR(RESIZE((UNSIGNED(X)+UNSIGNED(Y)+1), 9));
+		else
+			TEMP(8 downto 0) := STD_LOGIC_VECTOR(RESIZE((UNSIGNED(X)+UNSIGNED(Y)), 9));
+		end if;
+		if (TEMP(7 downto 0) = x"00") then -- zero flag check
+			TEMP(12) := '1';
+		else
+			TEMP(12) := '0';
+		end if;
+		TEMP(9) := '0'; -- add instructions clear the N flag
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		return STD_LOGIC_VECTOR(TEMP);
+	end ADC_8;
+	
+	function ADD_16(X, Y : STD_LOGIC_VECTOR(15 downto 0))
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(21 downto 0) := (others => '0');
+	begin
+		--if ((UNSIGNED(X(3 downto 0)) + UNSIGNED(Y(3 downto 0))) > x"F") then
+			--TEMP(19) := '1';
+		--else
+			--TEMP(19) := '0';
+		--end if;
+		TEMP(16 downto 0) := STD_LOGIC_VECTOR(RESIZE((UNSIGNED(X)+UNSIGNED(Y)), 17));
+		if (TEMP(15 downto 0) = x"0000") then -- zero flag check
+			TEMP(20) := '1';
+		else
+			TEMP(20) := '0';
+		end if;
+		TEMP(17) := '0'; -- add instructions clear the N flag
+		TEMP(18) := parity(TEMP(15 downto 0)); -- set/reset parity flag
+		return STD_LOGIC_VECTOR(TEMP);
+	end ADD_16;
+	
+	function SUB_8(X, Y : STD_LOGIC_VECTOR(7 downto 0))
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+--		if (UNSIGNED(Y(3 downto 0)) > UNSIGNED(X(3 downto 0))) then
+--			TEMP(11) := '1'; -- set half carry flag
+--		else
+--			TEMP(11) := '0';
+--		end if;
+		if (UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)) > 0) then
+			TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+			TEMP(6) := '0'; -- reset carry flag
+			TEMP(12) := '0'; -- reset zero flag
+			TEMP(13) := '0'; -- reset negative flag
+		elsif (UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)) = 0) then
+			TEMP(7 downto 0) := x"00";
+			TEMP(6) := '0'; -- reset carry flag
+			TEMP(12) := '1'; -- set zero flag
+			TEMP(13) := '0'; -- reset negative flag
+		else
+			TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+			TEMP(6) := '1'; -- set carry flag
+			TEMP(12) := '0'; -- reset zero flag
+			TEMP(13) := '1'; -- set negative flag
+		end if;
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		TEMP(9) := '1'; -- sub instructions set the N flag
+		return STD_LOGIC_VECTOR(TEMP);
+	end SUB_8;
+	
+	function SBC_8(X, Y : STD_LOGIC_VECTOR(7 downto 0); C : STD_LOGIC)
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+		if (C = '1') then
+--			if ((UNSIGNED(Y(3 downto 0))+1) > (UNSIGNED(X(3 downto 0)))) then
+--				TEMP(11) := '1'; -- set half carry flag
+--			else
+--				TEMP(11) := '0';
+--			end if;
+			if (UNSIGNED(X(7 downto 0))-(UNSIGNED(Y(7 downto 0))+1) > 0) then
+				TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+				TEMP(6) := '0'; -- reset carry flag
+				TEMP(12) := '0'; -- reset zero flag
+				TEMP(13) := '0'; -- reset negative flag
+			elsif (UNSIGNED(X(7 downto 0))-(UNSIGNED(Y(7 downto 0))+1) = 0) then
+				TEMP(7 downto 0) := x"00";
+				TEMP(6) := '0'; -- reset carry flag
+				TEMP(12) := '1'; -- set zero flag
+				TEMP(13) := '0'; -- reset negative flag
+			else
+				TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+				TEMP(6) := '1'; -- set carry flag
+				TEMP(12) := '0'; -- reset zero flag
+				TEMP(13) := '1'; -- set negative flag
+			end if;
+		else
+--			if (UNSIGNED(Y(3 downto 0)) > UNSIGNED(X(3 downto 0))) then
+--				TEMP(11) := '1'; -- set half carry flag
+--			else
+--				TEMP(11) := '0';
+--			end if;
+			if (UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)) > 0) then
+				TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+				TEMP(6) := '0'; -- reset carry flag
+				TEMP(12) := '0'; -- reset zero flag
+				TEMP(13) := '0'; -- reset negative flag
+			elsif (UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)) = 0) then
+				TEMP(7 downto 0) := x"00";
+				TEMP(6) := '0'; -- reset carry flag
+				TEMP(12) := '1'; -- set zero flag
+				TEMP(13) := '0'; -- reset negative flag
+			else
+				TEMP(7 downto 0) := STD_LOGIC_VECTOR(UNSIGNED(X(7 downto 0))-UNSIGNED(Y(7 downto 0)));
+				TEMP(6) := '1'; -- set carry flag
+				TEMP(12) := '0'; -- reset zero flag
+				TEMP(13) := '1'; -- set negative flag
+			end if;
+		end if;
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		TEMP(9) := '1';
+		return STD_LOGIC_VECTOR(TEMP);
+	end SBC_8;
+	
+	function AND_8(X, Y : STD_LOGIC_VECTOR(7 downto 0))
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+		TEMP(7 downto 0) := (X and Y);
+		TEMP(11) := '0';
+		TEMP(9) := '0';
+		TEMP(8) := '0';
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		TEMP(9) := '1';
+		return STD_LOGIC_VECTOR(TEMP);
+	end AND_8;
+	
+	function XOR_8(X, Y : STD_LOGIC_VECTOR(7 downto 0))
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+		TEMP(7 downto 0) := (X XOR Y);
+		if (TEMP(7 downto 0) = x"00") then
+			TEMP(12) := '1';
+		else
+			TEMP(12) := '0';
+		end if;
+		TEMP(11) := '0';
+		TEMP(9) := '0';
+		TEMP(8) := '0';
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		TEMP(9) := '1';
+		return STD_LOGIC_VECTOR(TEMP);
+	end XOR_8;
+	
+	function OR_8(X, Y : STD_LOGIC_VECTOR(7 downto 0)) -- sets the
+		return STD_LOGIC_VECTOR is
+	variable TEMP : STD_LOGIC_VECTOR(13 downto 0) := (others => '0');
+	begin
+		TEMP(7 downto 0) := (X OR Y);
+		TEMP(11) := '0';
+		TEMP(9) := '0';
+		TEMP(8) := '0';
+		TEMP(10) := parity((x"00")&(TEMP(7 downto 0))); -- set/reset parity flag
+		return STD_LOGIC_VECTOR(TEMP);
+	end OR_8;
+
+END package body GaimBoiLibrary;

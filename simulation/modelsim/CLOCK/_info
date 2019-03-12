@@ -1,0 +1,33 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/simulation/modelsim
+vCLOCK_0002
+!s110 1551863323
+!i10b 1
+!s100 DPTDaVCDnlSCK[0SATTAJ3
+IRK:FMH2XNPD8b<oS@IGj`3
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1551845467
+8C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK/CLOCK_0002.v
+FC:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK/CLOCK_0002.v
+L0 2
+OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1551863323.000000
+!s107 C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK/CLOCK_0002.v|
+!s90 -reportprogress|300|-vlog01compat|-work|CLOCK|+incdir+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK|C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK/CLOCK_0002.v|
+!i113 1
+o-vlog01compat -work CLOCK
+!s92 -vlog01compat -work CLOCK +incdir+C:/Users/Horten/Documents/FPGA/DE1SOC/Projects/GaimBoi/CLOCK
+tCvgOpt 0
+n@c@l@o@c@k_0002

@@ -1,0 +1,40 @@
+library IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+USE WORK.GaimBoiLibrary.ALL;
+
+entity Display_Controller is
+    Port 
+	 ( 
+		KEY		: IN STD_LOGIC_VECTOR(3 downto 0);
+		INT		: BUFFER STD_LOGIC;
+		IORQ		: IN STD_LOGIC;
+		RD			: IN STD_LOGIC;
+		DATA		: INOUT STD_LOGIC_VECTOR(7 downto 0)
+	 );
+end Display_Controller;
+
+architecture Structural of Display_Controller is
+	
+	------------ Type Declarations ------------
+	type RA is array (7 downto 0) of STD_LOGIC_VECTOR(15 downto 0);
+	------------ Signal Declarations ------------
+	signal DEBUG_REGISTERS 	: RA; -- := (x"0100", x"0000", x"0504", x"0706", x"0908", X"0B0A", x"0000", x"0F0E");
+	signal RAM_CLK 	: STD_LOGIC := '1';
+	signal RAM_WR  	: STD_LOGIC := '1';
+	signal RAM_DATA	: STD_LOGIC_VECTOR(7 downto 0);
+	signal RAM_Q		: STD_LOGIC_VECTOR(7 downto 0);
+	signal PORT_ID		: STD_LOGIC_VECTOR(7 downto 0) := x"1234";
+	------------ Start of Design ------------
+begin
+
+	------------ Component Instantiations ------------
+
+	process(KEY, IORQ, RD)
+	variable COUNTER 	: INTEGER := 0;
+	variable TEMP 		: STD_LOGIC_VECTOR(3 downto 0);
+	begin
+		
+	end process;
+	
+end Structural; 

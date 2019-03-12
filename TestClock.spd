@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="TestClock_sim/TestClock.vho" type="VHDL" />
+ <topLevel name="TestClock" />
+ <deviceFamily name="cyclonev" />
+</simPackage>
